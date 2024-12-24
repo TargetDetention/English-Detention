@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="x-icon" href="image.png">
+    <title>Detention Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body class="bg-gradient-to-r from-indigo-400 via-purple-600 to-red-400 p-4 font-roboto">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-2 gap-20">
+      
+      <div class="bg-gradient-to-br from-purple-300 to-indigo-500 shadow-xl rounded-xl p-8 transition-all duration-300 hover:shadow-2xl fads">
+        <img
+          src="./target.png"
+          alt="Target Logo"
+          class="w-32 mx-auto mb-4"
+        />
+        <h1 class="text-3xl font-semibold text-center text-white mb-6 first-text texts">Detention Form</h1>
+
+        <form id="detention-form" class="space-y-6">
+          <div>
+            <label class="block text-gray-200 font-medium">Ism Sharif</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="👤 Ism Sharif"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-200 font-medium first-text">Sinf</label>
+            <select
+              name="class"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">Sinf tanlang👇</option>
+              <option value="5A">5А</option>
+              <option value="5B">5Б</option>
+              <option value="6A">6А</option>
+              <option value="6B">6Б</option>
+              <option value="7A">7А</option>
+              <option value="7B">7Б</option>
+              <option value="8A">8А</option>
+              <option value="8B">8Б</option>
+              <option value="9A">9А</option>
+              <option value="9B">9Б</option>
+              <option value="10A">10А</option>
+              <option value="10B">10Б</option>
+              <option value="11A">11А</option>
+              <option value="11B">11Б</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-gray-200 font-medium first-text">Sabab</label>
+            <input
+              type="text"
+              name="reason"
+              placeholder="✍️ Sababni yozing"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-200 font-medium first-text">Level</label>
+            <select
+              name="level"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">Level tanlang👇</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Elementary">Elementary</option>
+              <option value="Pre-intermediete">Pre-intermediete</option>
+              <option value="Intermediete">Intermediete</option>
+              <option value="Upper-Intermediete">Upper-Intermediete</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-gray-200 font-medium first-text">Ustozni tanlang</label>
+            <select
+              name="teacher"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">Ustozni tanlang👇</option>
+              <option value="Mohinur">Mohinur</option>
+              <option value="Barno">Barno</option>
+              <option value="Barchinoy">Barchinoy</option>
+            </select>
+          </div>
+
+          <div class="text-center">
+            <button
+              type="button"
+              onclick="addStudent()"
+              class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            >
+              Qoshish
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-gradient-to-br from-purple-300 to-red-400 shadow-xl rounded-xl p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl students">
+        <img
+          src="./target.png"
+          alt="Target Logo"
+          class="w-32 mx-auto mb-6"
+        />
+        <h2 class="text-2xl font-semibold text-center text-white mb-4 second-text">
+          Spiskada <span id="student-count">0</span> ta student bor
+        </h2>
+
+        <ul
+          id="student-list"
+          class="space-y-4 overflow-y-auto flex-grow pr-4"
+          style="max-height: 500px" 
+        ></ul>
+
+        <div class="text-center mt-6">
+          <button
+            type="button"
+            onclick="sendToTelegram()"
+            class="w-full px-5 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transform transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
+          >
+            Jonatish
+          </button>
+        </div>            
+      </div>
+    </div>
+
+
+    <script src="./main.js"></script>
+  </body>
+</html>
